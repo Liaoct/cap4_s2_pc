@@ -65,7 +65,21 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'http://localhost:' + port
+// 允许跨域
+// app.all('*',function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//
+//     if (req.method == 'OPTIONS') {
+//         res.send(200); /让options请求快速返回/
+//     }
+//     else {
+//         next();
+//     }
+// });
+
+var uri = 'http://10.5.5.231:' + port
 
 var _resolve
 var readyPromise = new Promise(resolve => {
@@ -82,7 +96,7 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
-var server = app.listen(port)
+var server = app.listen(port, '10.5.5.231')
 
 module.exports = {
   ready: readyPromise,

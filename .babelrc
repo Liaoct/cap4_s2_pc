@@ -8,7 +8,12 @@
     }],
     "stage-2"
   ],
-  "plugins": ["transform-runtime", "transform-vue-jsx"],
+  "plugins": ["transform-runtime", "transform-vue-jsx", ["component", [
+      {
+          "libraryName": "cap-ui",
+          "styleLibraryName": "theme-default"
+      }
+  ]]],
   "env": {
     "test": {
       "presets": ["env", "stage-2"],

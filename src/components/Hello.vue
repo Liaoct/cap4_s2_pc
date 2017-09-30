@@ -1,34 +1,46 @@
 <template>
   <div class="el-hello">
       <p class="el-hello__msg">{{ msg }}</p>
-      <button>start</button>
+      <calendar
+          v-model="value1"
+          type="datetime"
+          placeholder="选择日期时间"
+          format="yyyy年MM月dd天"></calendar>
   </div>
 </template>
 
 <script>
     import { mixinHullMethod, requestHull, waitCall } from '../common/hull';
+    import { Calendar } from 'cap-ui';
 
     export default {
         name : 'hello',
         mixins : [mixinHullMethod],
         data() {
             return {
-                msg : 'Welcome to Your Vue.js App'
+                msg : 'Welcome to Your Vue.js App',
+                value1 : ''
             };
         },
         async mounted() {
             console.log(this);
+            console.log(this.nmspace);
             this.bindMethods({ saveInfo : 'saveInfo' });
             const msg = await waitCall('testHullCall');
             console.log(msg);
         },
         methods : {
-            async saveInfo(data) {
+            async saveInfo(data, callback) {
+                this.msg = data;
                 console.log(this);
                 console.log(data);
-                const res = await requestHull('saveMsg', { age : 10 });
-                console.log(res);
+                callback && requestHull(callback, { msg : 'sth. from client' });
+//                const res = await requestHull('saveMsg', { age : 10 });
+//                console.log(res);
             }
+        },
+        components : {
+            Calendar
         }
     };
 </script>

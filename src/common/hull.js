@@ -39,35 +39,65 @@
  *  liaoct备注： 后续可以考虑加入vuex store的支持。
  */
 
+const namespace = 'Hull';
+
+const getValueByPath = function (object, prop) {
+    prop = prop || '';
+    const paths = prop.split('.');
+    let current = object;
+    let result = null;
+    for (let i = 0, j = paths.length; i < j; i++) {
+        const path = paths[i];
+        if (!current) break;
+
+        if (i === j - 1) {
+            result = current[path];
+            break;
+        }
+        current = current[path];
+    }
+    return result;
+};
+
 export const waitCall = method => new Promise(resolve => {
     if (!window) return;
-    window[method] = function (data) {
-        delete window[method];
+    if (!window[namespace]) window[namespace] = {};
+    window[namespace][method] = function (data) {
+        delete window[namespace][method];
         resolve(data);
     };
 });
 
-export const requestHull = (method, data) => {
+export const requestHull = (method, data, wait) => {
     if (!window || !method || typeof method !== 'string') return null;
     let curWin = window;
     let parent = curWin.parent;
-    while (parent !== curWin && !parent[method]) {
+    while (parent !== curWin && !getValueByPath(parent, method)) {
         curWin = parent;
         parent = parent.parent;
     }
-    if (!parent[method] && typeof parent[method] !== 'function') return null;
-    return new Promise((resolve, reject) => {
-        parent[method](data, results => resolve(results), err => reject(err));
-    });
+    const func = getValueByPath(parent, method);
+    if (!func && typeof func !== 'function') return null;
+    if (wait) {
+        return new Promise((resolve, reject) => {
+            func(data, results => resolve(results), err => reject(err));
+        });
+    }
+    return func(data);
 };
 
 export const mixinHullMethod = {
+    data() {
+        return { nmspace : namespace };
+    },
     methods : {
         bindMethods(methods) {
             const self = this;
             self._bindMethods = methods;
+            const namespace = this.nmspace;
+            if (!window[namespace]) window[namespace] = {};
             Object.keys(methods).forEach(name => {
-                window[name] = function (...args) {
+                window[namespace][name] = function (...args) {
                     self[methods[name]](...args);
                 };
             });
@@ -75,8 +105,10 @@ export const mixinHullMethod = {
     },
     destroyed() {
         const methods = this._bindMethods;
+        const namespace = this.nmspace;
+        if (!window[namespace]) return;
         Object.keys(methods).forEach(name => {
-            delete window[name];
+            delete window[namespace][name];
         });
     }
 };
