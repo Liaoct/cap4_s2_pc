@@ -1213,13 +1213,14 @@ caniuse-lite@^1.0.30000718, caniuse-lite@^1.0.30000726:
   version "1.0.30000735"
   resolved "http://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30000735.tgz#aab44016ef243e215ef43fd1343efd22930842f8"
 
-cap-ui@^0.0.2:
-  version "0.0.2"
-  resolved "http://10.5.5.200:4873/cap-ui/-/cap-ui-0.0.2.tgz#01188d15b09e617eb0ae1061eada3f31234159d9"
+cap-ui@^0.0.3:
+  version "0.0.3"
+  resolved "http://10.5.5.200:4873/cap-ui/-/cap-ui-0.0.3.tgz#cf9012087a21f4f7910441be05bd461f84a9cd75"
   dependencies:
     async-validator "1.6.9"
     babel-helper-vue-jsx-merge-props "^2.0.0"
     deepmerge "^1.2.0"
+    jquery "1.12.4"
     numeral "^2.0.6"
     throttle-debounce "^1.0.1"
 
@@ -3544,6 +3545,10 @@ isurl@^1.0.0-alpha5:
   dependencies:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
+
+jquery@1.12.4:
+  version "1.12.4"
+  resolved "http://10.5.5.200:4873/jquery/-/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
 
 js-base64@^2.1.9:
   version "2.3.2"

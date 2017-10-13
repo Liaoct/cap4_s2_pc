@@ -1,5 +1,6 @@
-var proxySite = 'http://10.5.5.200:9898';// 代理200环境
+// var proxySite = 'http://10.5.5.200:9898';// 代理200环境
 // var proxySite = 'http://10.5.5.204:8088';// 代理测试环境
+var proxySite = 'http://10.5.5.252:8080';// 代理测试环境
 
 module.exports = {
     '/seeyon/rest/cap4/template/' : {

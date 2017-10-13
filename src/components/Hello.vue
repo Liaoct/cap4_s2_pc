@@ -26,15 +26,18 @@
             console.log(this);
             console.log(this.nmspace);
             this.bindMethods({ saveInfo : 'saveInfo' });
-            const msg = await waitCall('testHullCall');
-            console.log(msg);
+//            const msg = await waitCall('testHullCall');
+//            console.log(msg);
         },
         methods : {
             async saveInfo(data, callback) {
                 this.msg = data;
                 console.log(this);
                 console.log(data);
-                callback && requestHull(callback, { msg : 'sth. from client' });
+                console.log(callback);
+//                callback({ msg : 'sth. from client' });
+                const result = callback && await requestHull(callback)({ msg : 'sth. from client' });
+                console.log(result);
 //                const res = await requestHull('saveMsg', { age : 10 });
 //                console.log(res);
             }
