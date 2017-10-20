@@ -12,7 +12,7 @@ const methodMapAction = {
 };
 
 const resource = function ({ url, params, actions = {}, body, ...options }) {
-    if (url.match(/^http/) === null) url = `${api}${url}`;
+    if (url.match(/^http/) === null) url = `${url}`;
     // 忽略自定义的action，统一使用标准的action
     const resource = Vue.resource(url, {}, {}, options);
     let action = options.method || 'get';

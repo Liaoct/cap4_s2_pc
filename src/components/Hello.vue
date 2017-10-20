@@ -1,17 +1,19 @@
 <template>
   <div class="el-hello">
       <p class="el-hello__msg">{{ msg }}</p>
+      <button @click="requestParent">请求父iframe的方法</button>
       <calendar
           v-model="value1"
           type="datetime"
           placeholder="选择日期时间"
           format="yyyy年MM月dd天"></calendar>
+      <checkbox-group><checkbox label="test"></checkbox></checkbox-group>
   </div>
 </template>
 
 <script>
     import { mixinHullMethod, requestHull, waitCall } from '../common/hull';
-    import { Calendar } from 'cap-ui';
+    import { Calendar, Checkbox, CheckboxGroup } from 'cap-ui';
 
     export default {
         name : 'hello',
@@ -40,10 +42,15 @@
                 console.log(result);
 //                const res = await requestHull('saveMsg', { age : 10 });
 //                console.log(res);
+            },
+            requestParent() {
+                requestHull('saveMsg', { age : 10 });
             }
         },
         components : {
-            Calendar
+            Calendar,
+            Checkbox,
+            CheckboxGroup
         }
     };
 </script>
